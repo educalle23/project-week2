@@ -6,7 +6,7 @@ const {
   createParfum,
   updateParfum,
   deleteParfum,
-} = require("../controllers/parfumcontroller");
+} = require("../controllers/parfumController");
 
 /**
  * @swagger
