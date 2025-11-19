@@ -1,4 +1,4 @@
-const Parfum = require("../models/parfums");
+const Parfum = require("../models/Parfums");
 
 // GET all parfums
 exports.getAllParfums = async (req, res) => {
