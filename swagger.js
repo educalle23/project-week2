@@ -14,7 +14,7 @@ const doc = {
       description: 'Development server'
     },
     {
-      url: 'https://your-app.onrender.com',
+      url: 'https://project-week2.onrender.com',
       description: 'Production server'
     }
   ],
