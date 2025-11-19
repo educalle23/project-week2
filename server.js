@@ -29,6 +29,10 @@ const swaggerOptions = {
       {
         url: `http://localhost:${PORT}`,
         description: "Development server",
+        },
+        {
+        url: "https://project-week2.onrender.com",
+        description: "Production server",
       },
     ],
   },
