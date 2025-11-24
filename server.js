@@ -49,6 +49,9 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 // 1 hora
+    }
   })
 );
 
@@ -70,7 +73,6 @@ app.get("/api-docs.json", (req, res) => {
 app.use("/", require("./routes/indexRoutes"));
 app.use("/parfums", require("./routes/parfumRoutes"));
 app.use("/clients", require("./routes/clientRoutes"));
-app.use("/auth", require("./routes/authRoutes"));
 
 
 app.listen(PORT, () => {
