@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isAuthenticated = require("../middleware/isAuthenticated");
 const {
   getAllParfums,
   getParfumById,
@@ -114,7 +115,7 @@ router.get("/:id", getParfumById);
  *       400:
  *         description: Validation error
  */
-router.post("/", createParfum);
+router.post("/", isAuthenticated, createParfum);
 
 /**
  * @swagger
@@ -140,7 +141,7 @@ router.post("/", createParfum);
  *       404:
  *         description: Perfume not found
  */
-router.put("/:id", updateParfum);
+router.put("/:id", isAuthenticated, updateParfum);
 
 /**
  * @swagger
@@ -160,6 +161,6 @@ router.put("/:id", updateParfum);
  *       404:
  *         description: Perfume not found
  */
-router.delete("/:id", deleteParfum);
+router.delete("/:id", isAuthenticated, deleteParfum);
 
 module.exports = router;

@@ -4,6 +4,10 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+const passport = require("passport");
+const session = require("express-session");
+// Load Passport strategies and configuration
+require("./config/passport")(passport);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -29,8 +33,8 @@ const swaggerOptions = {
       {
         url: `http://localhost:${PORT}`,
         description: "Development server",
-        },
-        {
+      },
+      {
         url: "https://project-week2.onrender.com",
         description: "Production server",
       },
@@ -38,6 +42,19 @@ const swaggerOptions = {
   },
   apis: ["./routes/*.js"],
 };
+
+//Session and Passport Configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Initialize Passport and restore authentication state, if any
+app.use(passport.initialize());
+app.use(passport.session());
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
@@ -50,16 +67,11 @@ app.get("/api-docs.json", (req, res) => {
 });
 
 // Routes
+app.use("/", require("./routes/indexRoutes"));
 app.use("/parfums", require("./routes/parfumRoutes"));
 app.use("/clients", require("./routes/clientRoutes"));
+app.use("/auth", require("./routes/authRoutes"));
 
-// Root route
-app.get("/", (req, res) => {
-  res.json({
-    message: "Perfume Shop API is running",
-    documentation: "/api-docs",
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

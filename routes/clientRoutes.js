@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isAuthenticated = require("../middleware/isAuthenticated"); 
 const {
   getAllClients,
   getClientById,
@@ -204,7 +205,7 @@ router.get("/:id", getClientById);
  *       400:
  *         description: Validation error or email already exists
  */
-router.post("/", createClient);
+router.post("/", isAuthenticated, createClient);
 
 /**
  * @swagger
@@ -262,7 +263,7 @@ router.post("/", createClient);
  *       400:
  *         description: Validation error
  */
-router.put("/:id", updateClient);
+router.put("/:id", isAuthenticated, updateClient);
 
 /**
  * @swagger
@@ -298,6 +299,6 @@ router.put("/:id", updateClient);
  *       400:
  *         description: Invalid ID format
  */
-router.delete("/:id", deleteClient);
+router.delete("/:id", isAuthenticated, deleteClient);
 
 module.exports = router;
